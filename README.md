@@ -1,12 +1,14 @@
-## OC|CS Angular Essentials Workshop
+# OC|CS Angular Essentials Workshop
 
 We will be building a dashboard to track The Grid's most prominent hackers!
 
 ![app](https://raw.githubusercontent.com/victormejia/fluent-angular-testing-workshop/master/screenshots/app-screenshot.png)
 
-### Setup
+## Setup
+<details>
+  <summary>Details</summary>
 
-#### 1. Please install the following on your machine:
+### 1. Please install the following on your machine:
   * Node 8.x
   * npm 5.x
   * Angular CLI: `npm install -g @angular/cli`
@@ -21,7 +23,7 @@ We will be building a dashboard to track The Grid's most prominent hackers!
     * [Sass](https://marketplace.visualstudio.com/items?itemName=robinbentley.sass-indented)
     * [vscode-icons](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons)
 
-#### 2. Scaffold a new Angular project using the CLI
+### 2. Scaffold a new Angular project using the CLI
 
 ```bash
 ng new occs-workshop --style=scss --routing
@@ -29,7 +31,7 @@ ng new occs-workshop --style=scss --routing
 
 This adds support for Sass and enables routing.
 
-#### 3. Install the following project dependencies:
+### 3. Install the following project dependencies:
 
 ```bash
 npm install semantic-ui-card semantic-ui-input semantic-ui-reset semantic-ui-table npm-run-all json-server faker @types/faker -S
@@ -47,7 +49,7 @@ Configure the CLI to bundle the Semantic UI dependencies by updating the `styles
 ]
 ```
 
-#### 4. Configure json-server for a quick mock API
+### 4. Configure json-server for a quick mock API
 
   * Grab `db.json` from this repo, and place it at the root of your project
   * Create a `proxy.conf.json` with the following contents:
@@ -79,7 +81,7 @@ We have created a new API route `/api`, and the available route is `localhost:30
 "start:server": "json-server --watch db.json --routes routes.json"
 ```
 
-#### 5. Add some quick styles:
+### 5. Add some quick styles:
 
   * Drop `<link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">` in your index.html
   * Add the following to `styles.scss`
@@ -92,7 +94,7 @@ body {
 }
 ```
 
-#### 6. Run it :boom:
+### 6. Run it :boom:
 Run `npm start`.
 
 In your browser, `localhost:3000/api/hackers` should display the list of hackers:
@@ -105,3 +107,157 @@ Your Angular app will be live at `localhost:4200`:
 
 
 Your changes should look like this: https://github.com/victormejia/occs-angular-workshop/commit/f62e54aa2ea924d8183687ef18290c81b78807bf
+</details>
+
+## TypeScript Intro
+
+<details>
+  <summary>Details</summary>
+
+TypeScript is a typed superset of JavaScript. Your current JavaScript code will be understood by TS, and you can sprinkle in types as you'd like. JavaScript has types, but is dynamic and TS allows you to enforce typing at both dev and compile time.
+
+Let's start with the built in types:
+
+### `string`
+
+```js
+const name: string = 'Victor';
+```
+
+### `number`
+
+```js
+function add(x: number, y: number) {
+  return x + y;
+}
+```
+
+### `boolean`
+
+```js
+const married: boolean = true;
+```
+
+### `Array<T>` or `T[]`
+
+```js
+export class ProductListComponent {
+
+  products: string[]
+
+  constructor() {}
+}
+```
+
+### `any`
+You can declare a type to be of `any`:
+
+```js
+function clone(src: any) {
+  ...
+}
+```
+
+### `Object`
+Or say it's an object:
+
+```js
+function clone(src: Object) {
+  ...
+}
+```
+
+## Beyond the basics
+
+### you can specify that functions return a value
+
+```js
+function add(x, y): number {
+  return x + y
+}
+```
+
+### Property Initiliazers
+
+Property initializers work out of the box in TS (current at stage-2), and they are used quite often in Angular.
+
+```js
+class ProductListComponent {
+  products: string[] = ['A', 'B'];
+
+  constructor() {
+  }
+}
+```
+
+### `public/private` modifier in constructor
+
+Giving a modifier to a parameter automatically assigns that as a property on your instance:
+
+```js
+class ProductListComponent {
+  products: string[] = ['A', 'B'];
+
+  constructor(public http) {
+  }
+
+  methodA() {
+    // you have access to this.http
+  }
+}
+```
+
+### Interfaces
+
+Interfaces are a powerful way to describe your data. It enforces structure to your models without needlessly creating classes.
+
+```js
+interface Hacker {
+  id: string;
+  name: string;
+  inDanger: boolean;
+  email?: string;
+  password?: string;
+}
+
+// the following would give an error because "password" is a required property and not optional
+const hackerA: Hacker = {
+  id: 1,
+  name: 'Ron',
+  inDanger: false,
+}
+```
+
+### enums
+
+```js
+const enum Directions {
+  Up,
+  Down,
+  Left,
+  Right
+}
+
+let directions = [Directions.Up, Directions.Down, Directions.Left, Directions.Right]
+```
+
+string enum types also supported, although in this case a plain object suffices:
+
+```js
+enum ActionType {
+  AddUser = 'ADD_USER',
+  DeleteUser = 'DELETE_USER',
+  RenameUser = 'RENAME_USER',
+}
+```
+
+vs.
+
+```js
+const ActionType = {
+  AddUser: 'ADD_USER',
+  DeleteUser: 'DELETE_USER',
+  RenameUser: 'RENAME_USER'
+}
+```
+</details>
