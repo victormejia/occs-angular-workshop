@@ -19,7 +19,11 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss"
+        "styles.scss",
+        "../node_modules/semantic-ui-table/table.min.css",
+        "../node_modules/semantic-ui-reset/reset.min.css",
+        "../node_modules/semantic-ui-input/input.min.css",
+        "../node_modules/semantic-ui-card/card.min.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
