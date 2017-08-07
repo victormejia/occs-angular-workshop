@@ -102,3 +102,6 @@ In your browser, `localhost:3000/api/hackers` should display the list of hackers
 Your Angular app will be live at `localhost:4200`:
 
 ![app](https://raw.githubusercontent.com/victormejia/occs-angular-workshop/setup/screenshots/start.png)
+
+
+Your changes should look like this: https://github.com/victormejia/occs-angular-workshop/commit/f62e54aa2ea924d8183687ef18290c81b78807bf
