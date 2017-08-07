@@ -97,4 +97,8 @@ Run `npm start`.
 
 In your browser, `localhost:3000/api/hackers` should display the list of hackers:
 
+![db](https://raw.githubusercontent.com/victormejia/occs-angular-workshop/setup/screenshots/db.png)
+
 Your Angular app will be live at `localhost:4200`:
+
+![app](https://raw.githubusercontent.com/victormejia/occs-angular-workshop/setup/screenshots/start.png)
