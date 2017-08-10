@@ -339,6 +339,7 @@ Reference Commit: https://github.com/victormejia/occs-angular-workshop/commit/4c
 
 <details>
   <summary>Details</summary>
+
 Let's get to now generating a table of hackers. Start by generating a `hacker-list` component:
 
 ```bash
@@ -480,10 +481,12 @@ ng generate component hacker
 This component needs an input to render its data. In Angular, inputs to components are denoted by square brackets `[]`:
 
 ```html
-<app-hacker [hacker]="hackerInfo"></app-hacker>
+<app-contact [contact]="contactInfo"></app-contact>
 ```
 
-Here, we are passing in the `hackerInfo` object as the `hacker` property on the component. Let's update the template of the `Hacker` component to render the data:
+Here, we are passing in the `contactInfo` object as the `contact` property on the component.
+
+Update the template of the `Hacker` component to render the data:
 
 ```html
 <td>{{hacker.status}}</td>
@@ -508,18 +511,28 @@ We aren't using the component in the usual `<app-hacker></app-hacker>` way. The 
 To over come this, we can still use the component, except we must update the selector:
 
 ```js
-selector: '[app-hacker]'
+selector: '[app-hacker], // tslint:disable-line'
 ```
+
+The current `tslint` configuration doesn't allow this, so we can suppres this error.
 
 If you've installed the Angular Language Service extension, you'll see an error in your editor:
 
-![error](https://cl.ly/3G0e0K2j2B06)
+![error](https://d3vv6lp55qjaqc.cloudfront.net/items/1Y3m3V3i240h2Y0T3E0V/Screen%20Shot%202017-08-10%20at%202.58.54%20PM.png?X-CloudApp-Visitor-Id=b09e9af6ac0bf9f72590951057fdf698&v=f43f648d)
 
 It's giving you a real-time hint, and if you try to run this you'll see this error in your console:
 
 ![error](https://d3vv6lp55qjaqc.cloudfront.net/items/021U1C2l1b3E331b1e3t/Screen%20Shot%202017-08-10%20at%203.00.58%20PM.png?X-CloudApp-Visitor-Id=b09e9af6ac0bf9f72590951057fdf698&v=0d0156f2)
 
-We need to tell the component that it has inputs, and we do so by using the `@Input` decorator.
+We need to tell the component that it has inputs, and we do so by using the `@Input` decorator when declaring the `hacker` property on the `Hacker` component.
+
+```js
+@Input() hacker: Hacker;
+```
+
+Result:
+
+![result](https://d3vv6lp55qjaqc.cloudfront.net/items/1N3v0I3U1R37160P0I3G/Screen%20Shot%202017-08-10%20at%203.37.10%20PM.png?X-CloudApp-Visitor-Id=b09e9af6ac0bf9f72590951057fdf698&v=9a223d82)
 
 Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/726b65b8c0459517ffbe57c4ea1eabbd0517bc47
 
