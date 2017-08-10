@@ -4,7 +4,7 @@ We will be building a dashboard to track The Grid's most prominent hackers!
 
 ![app](https://raw.githubusercontent.com/victormejia/fluent-angular-testing-workshop/master/screenshots/app-screenshot.png)
 
-## Setup
+## 0. Setup
 <details>
   <summary>Details</summary>
 
@@ -109,7 +109,7 @@ Your Angular app will be live at `localhost:4200`:
 Your changes should look like this: https://github.com/victormejia/occs-angular-workshop/commit/f62e54aa2ea924d8183687ef18290c81b78807bf
 </details>
 
-## TypeScript Intro
+## 1. TypeScript Intro
 
 <details>
   <summary>Details</summary>
@@ -262,7 +262,7 @@ const ActionType = {
 ```
 </details>
 
-## Your First Component
+## 2. Your First Component
 
 <details>
   <summary>Details</summary>
@@ -335,13 +335,13 @@ This can be configured by changing the `ViewEncapsulation`:
 Reference Commit: https://github.com/victormejia/occs-angular-workshop/commit/4c9d640a65448b954656d9362028caf3ffe8c6dc
 </details>
 
-## Built-in Directives
+## 3. Built-in Directives
 
 <details>
   <summary>Details</summary>
 </details>
 
-## Component Inputs
+## 4. Component Inputs
 
 <details>
   <summary>Details</summary>
@@ -544,37 +544,37 @@ Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/72
 
 </details>
 
-## Component Output
+## 5. Component Output
 
 <details>
   <summary>Details</summary>
 </details>
 
-## Services and Http
+## 6. Services and Http
 
 <details>
   <summary>Details</summary>
 </details>
 
-## Directives
+## 7. Directives
 
 <details>
   <summary>Details</summary>
 </details>
 
-## Pipes
+## 8.Pipes
 
 <details>
   <summary>Details</summary>
 </details>
 
-## Unit Testing
+## 9. Unit Testing
 
 <details>
   <summary>Details</summary>
 </details>
 
-## Redux with ngrx
+## 10. Redux with ngrx
 
 <details>
   <summary>Details</summary>
