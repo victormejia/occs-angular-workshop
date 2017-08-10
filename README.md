@@ -261,3 +261,72 @@ const ActionType = {
 }
 ```
 </details>
+
+## Your First Component
+
+Let's generate the app's header component:
+
+```bash
+ng generate component header
+```
+
+This will automatically generate a component for you with selector `app-header`. Then we can add a property on this component:
+
+```js
+export class HeaderComponent implements OnInit {
+
+  title = 'The Grid';
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}
+```
+
+The template is simple:
+
+```html
+<header id="particles">
+  <h2>{{ title }}</h2>
+</header>
+```
+
+and sprinkle some styles on `header.component.scss`
+
+```css
+header {
+  height: 50px;
+  background: #1A2129;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  z-index: 1;
+
+  h2 {
+    color: #fff;
+    margin: 0;
+    padding: 10px;
+    position: absolute;
+    left: 10px;
+  }
+}
+```
+
+Finally, replace the boilerplate html in `app.component.html`
+
+```html
+<app-header></app-header>
+<router-outler></router-outlet>
+```
+
+Lots going on here. In Angular you can (one-way) data bind properties using the `{{ title }}` syntax. Also, Angular gives you scoped-styled components out of the box!
+
+![scoped styles](https://cl.ly/2m1U2o0N1W3o)
+
+This can be configured by changing the `ViewEncapsulation`:
+
+![view encapsulation](https://cl.ly/3s2B01193P1G)
+
+Reference Commit: https://github.com/victormejia/occs-angular-workshop/commit/4c9d640a65448b954656d9362028caf3ffe8c6dc
