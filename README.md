@@ -264,6 +264,9 @@ const ActionType = {
 
 ## Your First Component
 
+<details>
+  <summary>Details</summary>
+
 Let's generate the app's header component:
 
 ```bash
@@ -330,3 +333,4 @@ This can be configured by changing the `ViewEncapsulation`:
 ![view encapsulation](https://cl.ly/3s2B01193P1G)
 
 Reference Commit: https://github.com/victormejia/occs-angular-workshop/commit/4c9d640a65448b954656d9362028caf3ffe8c6dc
+</details>
