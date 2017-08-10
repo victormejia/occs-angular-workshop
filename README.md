@@ -326,11 +326,11 @@ Finally, replace the boilerplate html in `app.component.html`
 
 Lots going on here. In Angular you can (one-way) data bind properties using the `{{ title }}` syntax. Also, Angular gives you scoped-styled components out of the box!
 
-![scoped styles](https://cl.ly/2m1U2o0N1W3o)
+![scoped styles](https://d3vv6lp55qjaqc.cloudfront.net/items/3V070b1W2p3H2M250A38/Screen%20Shot%202017-08-10%20at%2011.12.45%20AM.png?X-CloudApp-Visitor-Id=b09e9af6ac0bf9f72590951057fdf698&v=326ab08a)
 
 This can be configured by changing the `ViewEncapsulation`:
 
-![view encapsulation](https://cl.ly/3s2B01193P1G)
+![view encapsulation](https://d3vv6lp55qjaqc.cloudfront.net/items/0o381o3K1T2v261x1j1C/Screen%20Shot%202017-08-10%20at%2011.13.42%20AM.png?X-CloudApp-Visitor-Id=b09e9af6ac0bf9f72590951057fdf698&v=61ecb08a)
 
 Reference Commit: https://github.com/victormejia/occs-angular-workshop/commit/4c9d640a65448b954656d9362028caf3ffe8c6dc
 </details>
