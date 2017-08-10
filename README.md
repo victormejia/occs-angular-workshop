@@ -335,6 +335,12 @@ This can be configured by changing the `ViewEncapsulation`:
 Reference Commit: https://github.com/victormejia/occs-angular-workshop/commit/4c9d640a65448b954656d9362028caf3ffe8c6dc
 </details>
 
+## Built-in Directives
+
+<details>
+  <summary>Details</summary>
+</details>
+
 ## Component Inputs
 
 <details>
@@ -536,4 +542,40 @@ Result:
 
 Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/726b65b8c0459517ffbe57c4ea1eabbd0517bc47
 
+</details>
+
+## Component Output
+
+<details>
+  <summary>Details</summary>
+</details>
+
+## Services and Http
+
+<details>
+  <summary>Details</summary>
+</details>
+
+## Directives
+
+<details>
+  <summary>Details</summary>
+</details>
+
+## Pipes
+
+<details>
+  <summary>Details</summary>
+</details>
+
+## Unit Testing
+
+<details>
+  <summary>Details</summary>
+</details>
+
+## Redux with ngrx
+
+<details>
+  <summary>Details</summary>
 </details>
