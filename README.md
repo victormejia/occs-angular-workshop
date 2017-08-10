@@ -334,3 +334,206 @@ This can be configured by changing the `ViewEncapsulation`:
 
 Reference Commit: https://github.com/victormejia/occs-angular-workshop/commit/4c9d640a65448b954656d9362028caf3ffe8c6dc
 </details>
+
+## Component Inputs
+
+<details>
+  <summary>Details</summary>
+
+Let's get to now generating a table of hackers. Start by generating a `hacker-list` component:
+
+```bash
+ng generate component hacker-list
+```
+
+We will also be configuring the Router. For the root route, we want to render this component, so in `app-routing.module.ts`, import this new component and change the router's config:
+
+```js
+import { HackerListComponent } from './hacker-list/hacker-list.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: HackerListComponent
+  }
+];
+```
+
+Wrap the `router-outlet` so we can add some styling around it:
+
+```html
+<div class="app">
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+```
+
+```css
+.app {
+  margin-top: 80px;
+
+  .content {
+    max-width: 900px;
+    padding: 10px;
+    margin: 20px auto;
+  }
+}
+```
+
+The `HackerList` component should have a property `hackers` of type `Array<Hacker>`:
+
+```js
+hackers: Array<Hacker>;
+```
+
+Create a `hacker.model.ts` in `app/core`, which will hold the interface to describe `Hacker` objects
+
+```js
+export interface Hacker {
+  id: string;
+  name: string;
+  dob: string;
+  address: string;
+  cityStateZip: string;
+  avatar: string;
+  phone: string;
+  statusMessage: string;
+  status?: string;
+  specialty: string;
+  ip: string;
+  email: string;
+  password: string;
+}
+```
+
+The `?` here tells it that the `status` property will be optional.
+
+In your component, any data fetching/setting should be done in the `OnInit` lifecycle hook (the `ngOnInit` method). Assign the following objects to the the `hackers` property:
+
+```js
+{
+  id: '0bf594d6-2d36-47de-af83-91c0c816a905',
+  name: 'Ignacio',
+  dob: '1956-12-07T15:30:00.333Z',
+  address: '7269 Bradtke Coves',
+  cityStateZip: 'West Cade, Tennessee 36631',
+  avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ninjad3m0/128.jpg',
+  phone: '(367) 277-3869',
+  statusMessage: 'We need to back up the digital SSL port!',
+  specialty: 'calculating feed',
+  ip: '173.68.118.11',
+  email: 'Ignacio_Littel.Haag@gmail.com',
+  password: 'kxHxzucqwmvV3y9'
+},
+{
+  id: '70dd6f38-fd14-4dfd-bd43-3b07586ce49e',
+  name: 'Price',
+  dob: '1960-06-01T11:01:12.720Z',
+  address: '85066 Ona Shores',
+  cityStateZip: 'Cartwrightview, South Carolina 24722',
+  avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/ashocka18/128.jpg',
+  phone: '(775) 232-7260',
+  statusMessage: 'Use the optical RAM pixel, then you can navigate the online protocol!',
+  specialty: 'bypassing pixel',
+  ip: '187.154.44.205',
+  email: 'Price.Donnelly9_Thompson37@gmail.com',
+  password: 'ttRXuJjmsm9NLdG',
+  status: 'warning'
+}
+```
+
+In the component's template, we can now render a table. In the table body, use the `*ngFor` directive to render a row for each hacker. For now, render empty `td` cells.
+
+```html
+<table class="ui selectable celled table">
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Name</th>
+      <th>Specialty</th>
+      <th>Secret Address</th>
+      <th class="phone">Phone</th>
+      <th>DOB</th>
+      <th>Last Message</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let hacker of hackers">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+```
+
+We could render all the necessary fields here, but let's take a step further a create a component to render the table cells for each hacker.
+
+```bash
+ng generate component hacker
+```
+
+This component needs an input to render its data. In Angular, inputs to components are denoted by square brackets `[]`:
+
+```html
+<app-contact [contact]="contactInfo"></app-contact>
+```
+
+Here, we are passing in the `contactInfo` object as the `contact` property on the component.
+
+Update the template of the `Hacker` component to render the data:
+
+```html
+<td>{{hacker.status}}</td>
+<td>{{hacker.name}}</td>
+<td>{{hacker.specialty}}</td>
+<td>{{hacker.address}} {{hacker.cityStateZip}}</td>
+<td>{{hacker.phone}}</td>
+<td>{{hacker.dob}}</td>
+<td>{{hacker.statusMessage}}</td>
+```
+
+Let's now use this component in the `hacker-list` component:
+
+```html
+<tr app-hacker [hacker]="hacker" *ngFor="let hacker of hackers"></tr>`
+```
+
+We aren't using the component in the usual `<app-hacker></app-hacker>` way. The reason here is that there really isn't an easy way to replace the wrapper with its contents (think `replace` from Angular 1.x)
+
+![hacker](https://d3vv6lp55qjaqc.cloudfront.net/items/1c0j1u2h3R3Y381k2P2X/%5Bf27e7b49b0038d2ed88665f6084cdad8%5D_Screen+Shot+2017-08-10+at+3.11.41+PM.png?X-CloudApp-Visitor-Id=b09e9af6ac0bf9f72590951057fdf698&v=47fd550a)
+
+To over come this, we can still use the component, except we must update the selector:
+
+```js
+selector: '[app-hacker], // tslint:disable-line'
+```
+
+The current `tslint` configuration doesn't allow this, so we can suppres this error.
+
+If you've installed the Angular Language Service extension, you'll see an error in your editor:
+
+![error](https://d3vv6lp55qjaqc.cloudfront.net/items/1Y3m3V3i240h2Y0T3E0V/Screen%20Shot%202017-08-10%20at%202.58.54%20PM.png?X-CloudApp-Visitor-Id=b09e9af6ac0bf9f72590951057fdf698&v=f43f648d)
+
+It's giving you a real-time hint, and if you try to run this you'll see this error in your console:
+
+![error](https://d3vv6lp55qjaqc.cloudfront.net/items/021U1C2l1b3E331b1e3t/Screen%20Shot%202017-08-10%20at%203.00.58%20PM.png?X-CloudApp-Visitor-Id=b09e9af6ac0bf9f72590951057fdf698&v=0d0156f2)
+
+We need to tell the component that it has inputs, and we do so by using the `@Input` decorator when declaring the `hacker` property on the `Hacker` component.
+
+```js
+@Input() hacker: Hacker;
+```
+
+Result:
+
+![result](https://d3vv6lp55qjaqc.cloudfront.net/items/1N3v0I3U1R37160P0I3G/Screen%20Shot%202017-08-10%20at%203.37.10%20PM.png?X-CloudApp-Visitor-Id=b09e9af6ac0bf9f72590951057fdf698&v=9a223d82)
+
+Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/726b65b8c0459517ffbe57c4ea1eabbd0517bc47
+
+</details>

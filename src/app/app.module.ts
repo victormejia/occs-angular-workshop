@@ -4,11 +4,15 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
+import { HackerListComponent } from './hacker-list/hacker-list.component';
+import { HackerComponent } from './hacker/hacker.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    HackerListComponent,
+    HackerComponent
   ],
   imports: [
     BrowserModule,
