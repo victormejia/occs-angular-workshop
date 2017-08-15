@@ -9,6 +9,7 @@ import { Hacker } from '../core/hacker.model';
 export class HackerListComponent implements OnInit {
 
   hackers: Array<Hacker>;
+  displayedList: Array<Hacker>;
 
   constructor() { }
 
@@ -26,7 +27,8 @@ export class HackerListComponent implements OnInit {
         specialty: 'calculating feed',
         ip: '173.68.118.11',
         email: 'Ignacio_Littel.Haag@gmail.com',
-        password: 'kxHxzucqwmvV3y9'
+        password: 'kxHxzucqwmvV3y9',
+        status: 'safe'
       },
       {
         id: '70dd6f38-fd14-4dfd-bd43-3b07586ce49e',
@@ -44,6 +46,17 @@ export class HackerListComponent implements OnInit {
         status: 'warning'
       }
     ];
+
+    this.displayedList = [...this.hackers];
+  }
+
+  filterData(term: string) {
+    const searchTerm = term.toLowerCase();
+
+    this.displayedList = this.hackers.filter((hacker) => {
+      const { name, status } = hacker;
+      return name.toLowerCase().includes(searchTerm) || status.toLowerCase().includes(searchTerm);
+    });
   }
 
 }

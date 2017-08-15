@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HackerListComponent } from './hacker-list/hacker-list.component';
 import { HackerComponent } from './hacker/hacker.component';
+import { HackerSearchComponent } from './hacker-search/hacker-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HackerListComponent,
-    HackerComponent
+    HackerComponent,
+    HackerSearchComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,5 @@
+<app-hacker-search (newSearch)="filterData($event)"></app-hacker-search>
+
 <table class="ui selectable celled table">
   <thead>
     <tr>
@@ -11,6 +13,6 @@
     </tr>
   </thead>
   <tbody>
-    <tr app-hacker [hacker]="hacker" *ngFor="let hacker of hackers"></tr>
+    <tr app-hacker [hacker]="hacker" *ngFor="let hacker of displayedList"></tr>
   </tbody>
 </table>
