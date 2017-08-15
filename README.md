@@ -549,13 +549,21 @@ Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/72
 <details>
   <summary>Details</summary>
 
-In Angular we use parenthesis `()` to specify action bindings. You can defined specific output actions for your components. We will be now defining a search component. It will listen for changes on a search term, and emit and event with that search term. We can start defining its usage as follows:
+In Angular we use parenthesis `()` to specify action bindings. For instance, if you want to listen for the `click` event on a button, you can do as follows:
+
+```html
+<button (click)="handleClick($event)">Submit</button>
+```
+
+No `ng-click` or `ngClick` here, just pure DOM API. You bind DOM properties with `[]`, and events with `()`. Simple! The `$event` naming is a convention used, and you have to give it that special name to get the actual event object.
+
+You can defined specific output actions for your components. We will be now defining a search component. It will listen for changes on a search term, and emit and event with that search term. We can start defining its usage as follows:
 
 ```html
 <app-hacker-search (newSearch)="filterData($event)"><app-hacker-search>
 ```
 
-`termChange` is an output from this component, and when triggered, it will call the `filterData` method on the parent component. The `$event` naming is a convention used, and you have to give it that special name to get the actual event object. The `HackerSearch` component can emit any kind of data.
+`termChange` is an output from this component, and when triggered, it will call the `filterData` method on the parent component The `HackerSearch` component can emit any kind of data.
 
 Start by generating a new component:
 
