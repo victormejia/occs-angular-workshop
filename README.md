@@ -633,6 +633,189 @@ Reference Commit: https://github.com/victormejia/occs-angular-workshop/commit/86
 
 <details>
   <summary>Details</summary>
+
+Angular v4 introduced an awesome new `HttpClient`, which has better typing, and also provides a way to intercept requests and responses in a middleware fashion.
+
+When working with http in Angular, be sure to import the `HttpClientModule` from `@angular/common/http`, and include it in the `imports` of the `NgModule`.
+
+```diff
+  // app.module.ts
+
+  import { BrowserModule } from '@angular/platform-browser';
+  import { NgModule } from '@angular/core';
++ import { HttpClientModule } from '@angular/common/http';
+  import { AppRoutingModule } from './app-routing.module';
+  import { AppComponent } from './app.component';
+  import { HeaderComponent } from './header/header.component';
+  import { HackerListComponent } from './hacker-list/hacker-list.component';
+  import { HackerComponent } from './hacker/hacker.component';
+  import { HackerSearchComponent } from './hacker-search/hacker-search.component';
+
+  @NgModule({
+    declarations: [
+      AppComponent,
+      HeaderComponent,
+      HackerListComponent,
+      HackerComponent,
+      HackerSearchComponent
+    ],
+    imports: [
+      BrowserModule,
+      AppRoutingModule,
++     HttpClientModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule { }
+```
+
+We will go ahead and create a `HackerService` where we can house all the calls to interface with our API. Let's place shared services in the `core/services` folder.
+
+```bash
+ng generate service core/services/hacker
+```
+
+You'll see an error: `WARNING Service is generated but not provided, it must be provided to be used`. This means you have to import it in `app.module.ts` and provide it to your app's module.
+
+```diff
+  import { BrowserModule } from '@angular/platform-browser';
+  import { NgModule } from '@angular/core';
+  import { HttpClientModule } from '@angular/common/http';
+  import { AppRoutingModule } from './app-routing.module';
+  import { AppComponent } from './app.component';
+  import { HeaderComponent } from './header/header.component';
+  import { HackerListComponent } from './hacker-list/hacker-list.component';
+  import { HackerComponent } from './hacker/hacker.component';
+  import { HackerSearchComponent } from './hacker-search/hacker-search.component';
++ import { HackerService } from './core/services/hacker.service';
+
+  @NgModule({
+    declarations: [
+      AppComponent,
+      HeaderComponent,
+      HackerListComponent,
+      HackerComponent,
+      HackerSearchComponent
+    ],
+    imports: [
+      BrowserModule,
+      AppRoutingModule,
+      HttpClientModule
+    ],
++   providers: [HackerService],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule { }
+```
+
+In this service, we will inject the `HttpClient`, so we import it and inject it in the constructor. Remember, by giving it the `private` or `public` modifier, TypeScript will automatically assign it as a property on the service instance. The `@Injectable()` decorator allows this service to have injected dependencies.
+
+```js
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable()
+export class HackerService {
+
+  constructor(private http: HttpClient) { }
+
+  getHackers() {
+    return this.http.get(`/api/hackers`);
+  }
+}
+```
+
+Inside the `getHackers` method, we can return the result of calling `get` on the `http` client, which returns an Observable (explained in a bit).
+
+In your `HackerList` component, you can now import and inject the API service. In the `OnInit` hook, use the service to retrieve the data.
+
+```js
+import { Hacker } from '../core/hacker.model';
+import { HackerService } from '../core/services/hacker.service';
+
+...
+
+export class HackerListComponent implements OnInit {
+
+  hackers: Array<Hacker>;
+
+  constructor(private api: HackerService) { }
+
+  ngOnInit() {
+    this.api.getHackers()
+      .subscribe(data => {
+        this.hackers = data;
+      });
+  }
+}
+```
+
+In Angular, calls to the http methods actually return an Observable and not a Promise. You can think of an Observable as a stream of events, emitting values to anyone who has subscribed to it.
+
+You might be getting the error below:
+
+![error](https://d3vv6lp55qjaqc.cloudfront.net/items/1R1q002X2G2d1X1m0a0T/Screen%20Recording%202017-08-15%20at%2002.49%20PM.gif?X-CloudApp-Visitor-Id=2623626&v=0a21fa6f)
+
+We need to tell the `HttpClient` what kind of data the response will be, in this case it will be an array of `Hacker`s. So we simply import `Hacker` and give it the type:
+
+```js
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Hacker } from '../hacker.model';
+
+@Injectable()
+export class HackerService {
+
+  constructor(private http: HttpClient) { }
+
+  getHackers() {
+    return this.http.get<Hacker[]>('/api/hackers');
+  }
+
+}
+```
+
+When our request finishes, the stream will emit the response body automatically. If we want the full response, we can tell `HttpClient` by specifying the `observe` option:
+
+```js
+getHackers() {
+  return this.http.get(`/api/hackers`, { observe: 'response' });
+}
+```
+
+### Error handling
+
+Your UI should gracefully handle errors, and display data accordingly. To handle errors, add an error handler to your .subscribe() call:
+
+```js
+this.api.getHackers()
+.subscribe(data => {
+  this.hackers = data;
+}, (err) => {
+  console.log(err);
+  this.hackers = [];
+});
+```
+Manually trigger the error by changing the path to an invalid one.
+
+### POST request
+
+Sending data is easy. Simply provide the object you want to send, no need to `JSON.stringify`:
+
+```js
+this.http.post('/api/hackers', newHacker)
+```
+
+**Exercise**
+ * Extend the `getHackers` method on the `HackerService` to take in a search term, and use that search term as the `q` query parameter. `json-server` supports full text search by using `?q=term`
+ * Update the `filterData` method on the `HackerList` component to make a call to the updated `getHackers` method. You shouldn't need a duplicate list now, it should update the `hackers` list
+
+ Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/e00201d45fef23d1415839bbb71dddeff4a8be1b
+
+### Intercepting requests
+
+You can intercept requests and responses similar to how Express middleware works. The docs are great on this, check it out: https://angular.io/guide/http#intercepting-all-requests-or-responses
 </details>
 
 ## 7. Directives
