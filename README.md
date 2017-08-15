@@ -548,6 +548,77 @@ Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/72
 
 <details>
   <summary>Details</summary>
+
+In Angular we use parenthesis `()` to specify action bindings. You can defined specific output actions for your components. We will be now defining a search component. It will listen for changes on a search term, and emit and event with that search term. We can start defining its usage as follows:
+
+```html
+<app-hacker-search (newSearch)="filterData($event)"><app-hacker-search>
+```
+
+`termChange` is an output from this component, and when triggered, it will call the `filterData` method on the parent component. The `$event` naming is a convention used, and you have to give it that special name to get the actual event object. The `HackerSearch` component can emit any kind of data.
+
+Start by generating a new component:
+
+```bash
+ng g c hacker-search
+```
+
+Add some markup and some styles:
+
+```html
+<div class="ui icon input">
+  <input type="text" placeholder="Search..." />
+</div>
+```
+
+```css
+.input {
+  width: 300px;
+
+  input {
+    font-family: "Titillium Web", sans-serif;
+  }
+}
+```
+
+And you can use this component in the `HackerList` component to make sure things are rendered fine:
+
+```html
+<app-hacker-search></app-hacker-search>
+```
+
+In the new component, you will need to import the `Output` and `EventEmitter` tokens:
+
+```js
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+```
+
+Next, we can define an emitter on this component:
+
+```js
+@Output() newSearch = new EventEmitter<string>();
+```
+
+We first need to start listening for `keyup` events from the input element, and we can call a method on the component itself:
+
+```html
+<input type="text" placeholder="Search..." (keyup)="handleChange($event)">
+```
+
+The `$event` naming is a convention used, and you have to give it that special name to get the actual event object. `handleChange` should be a method on the `HackerSearch` component. In this method, we don't do any filtering of any sort. The only thing we should is output a new event, using the component's custom emitter:
+
+```js
+handleChange(event) {
+  this.newSearch.emit(event.target.value);
+}
+```
+
+**Exercise**:
+  * listen for the `newSearch` event, which should call a method on the `HackerList` component
+  * filter the `this.hackers` list based on the term (search hacker name and status)
+
+Reference Commit: https://github.com/victormejia/occs-angular-workshop/commit/86b497e75cb57936583f3ba63b9944d6914181f5
+
 </details>
 
 ## 6. Services and Http
