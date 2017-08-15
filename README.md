@@ -813,6 +813,9 @@ this.http.post('/api/hackers', newHacker)
 
  Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/e00201d45fef23d1415839bbb71dddeff4a8be1b
 
+### Intercepting requests
+
+You can intercept requests and responses similar to how Express middleware works. The docs are great on this, check it out: https://angular.io/guide/http#intercepting-all-requests-or-responses
 </details>
 
 ## 7. Directives
