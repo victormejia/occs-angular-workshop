@@ -9,6 +9,7 @@ import { HackerComponent } from './hacker/hacker.component';
 import { HackerSearchComponent } from './hacker-search/hacker-search.component';
 import { HackerService } from './core/services/hacker.service';
 import { TextOnlyDirective } from './core/directives/text-only.directive';
+import { ShortDatePipe } from './core/pipes/short-date.pipe';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { TextOnlyDirective } from './core/directives/text-only.directive';
     HackerListComponent,
     HackerComponent,
     HackerSearchComponent,
-    TextOnlyDirective
+    TextOnlyDirective,
+    ShortDatePipe
   ],
   imports: [
     BrowserModule,
