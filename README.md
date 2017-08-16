@@ -909,6 +909,91 @@ Here `event` would be actual DOM event, so you have access to things like `event
 
 <details>
   <summary>Details</summary>
+
+Pipes are used to transform data on the fly and display that in your HTML. Angular has a few built-in pipes, for example the date pipe. Right now the dates aren't displayed in a user-friendly format:
+
+![date](https://d3vv6lp55qjaqc.cloudfront.net/items/3R2D1i1Z3C2Z222P2M0B/Screen%20Shot%202017-08-16%20at%2011.20.12%20AM.png?X-CloudApp-Visitor-Id=2623626&v=015956b8)
+
+But we can easily fix that using the date pipe:
+
+```html
+<td>{{hacker.dob | date}}</td>
+```
+
+![date](https://d3vv6lp55qjaqc.cloudfront.net/items/2T1c2w152C3x2L2f1W0T/Screen%20Shot%202017-08-16%20at%2011.21.53%20AM.png?X-CloudApp-Visitor-Id=2623626&v=7142ae37)
+
+Note that the `Date` and `Currency` pipes won't work on Safari and older browsers, so you need a polyfill:
+
+```html
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>
+```
+
+Say we don't want to download a polyfill, and we want to create our own pipe. The template for a pipe is fairly simple:
+
+```js
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'shortDate'
+})
+export class ShortDatePipe implements PipeTransform {
+
+  transform(value: any, args?: any): any {
+    return null;
+  }
+
+}
+```
+
+We want to use our pipe as follows:
+
+```html
+<td>{{hacker.dob | shortDate}}</td>
+```
+
+There are no args, just a value, which in this case will be the data. We can implement our own:
+
+```js
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'shortDate'
+})
+export class ShortDatePipe implements PipeTransform {
+
+  transform(isoDateString: string): string {
+    const date = new Date(isoDateString);
+
+    const month = date.getUTCMonth() + 1;
+    const day = date.getUTCDate();
+    const year = date.getUTCFullYear();
+    const hour = date.getUTCHours();
+    const minutes = date.getUTCMinutes();
+
+    const monthDisplay = month < 10 ? '0' + month : month;
+    const dayDisplay = day < 10 ? '0' + day : day;
+
+    return `${monthDisplay}/${dayDisplay}/${year}, ${this.getTimeDisplay(hour, minutes)}`;
+  }
+
+  getTimeDisplay(hour: number, minute: number) {
+    const h = hour % 12;
+    const hourDisplay = h < 10 ? '0' + h : h;
+    const minuteDisplay = minute < 10 ? '0' + minute : minute;
+    const dayPeriod = hour < 12 ? 'am' : 'pm';
+
+    return `${hourDisplay}:${minuteDisplay}${dayPeriod}`;
+  }
+
+}
+```
+
+And now we have a custom date pipe:
+
+![date](https://d3vv6lp55qjaqc.cloudfront.net/items/0u1Q252Q2i213k3q1d0H/Screen%20Shot%202017-08-16%20at%2011.26.56%20AM.png?X-CloudApp-Visitor-Id=2623626&v=dc6331ce)
+
+Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/ed0c8a95f8fa0776a1d113100eddba5f6eb24dca
+
 </details>
 
 ## 9. Unit Testing
