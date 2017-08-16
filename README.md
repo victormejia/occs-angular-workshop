@@ -822,6 +822,87 @@ You can intercept requests and responses similar to how Express middleware works
 
 <details>
   <summary>Details</summary>
+
+There are actually 3 kinds of directives in Angular:
+  * Components (includes a template)
+  * Structural (changing DOM layout, think `*ngIf`)
+  * Attribute (changing behavior of element/component)
+
+We've covered components, and now we will briefly cover attribute directives. You can read up on structural directives here: https://angular.io/guide/structural-directives
+
+You want to create attribute directives when you want to add behavior to an element/component. Maybe you want to add keyboard actions to an element, or restrict user input on an input element.
+
+The basic structure for a directive looks like this. It's a simple class decorated with the `@Directive`, and given a selector.
+
+```js
+import { Directive } from '@angular/core';
+
+@Directive({
+  selector: '[appTextOnly]'
+})
+export class TextOnlyDirective {
+
+  constructor() { }
+
+}
+```
+
+Its usage would then be:
+
+```html
+<input appTextOnly type="text" />
+```
+
+This would not enhance this basic input with some behavior. Most often in your directive you need access to the element that the directive is being applied on, and you can use `ElementRef` to do so.
+
+```diff
+-  import { Directive } from '@angular/core';
++  import { Directive, ElementRef } from '@angular/core';
+
+    @Directive({
+      selector: '[appTextOnly]'
+    })
+    export class TextOnlyDirective {
+
+-     constructor() { }
++     constructor(el: ElementRef) { }
+
+    }
+```
+
+The native HTML element is accessible via `this.el.nativeElement`.
+
+### Responding to user events
+
+It is also very useful to be able to react to user events. For instance, for the `app-text-only` directive we may want to react to `keydown` events. We can easily do this by using the `@HostListener` decorator on a method on the directive, and specify what we want the input to have:
+
+```js
+import { Directive, HostListener } from '@angular/core';
+
+@Directive({
+  selector: '[appTextOnly]'
+})
+export class TextOnlyDirective {
+
+  constructor() { }
+
+  @HostListener('keydown', ['$event'])
+  onKeydown(event) {
+
+  }
+}
+```
+
+Here `event` would be actual DOM event, so you have access to things like `event.key`, `event.target`, etc.
+
+**Exercise**
+ * Generate a new directive, and place it in `core/directives`: `ng generate directive core/directives/text-only`
+ * Complete the `TextOnlyDirective` by inspecting `event.key` and checking if it's a number. If so, prevent the default behavior. You can use this regular expression: `const numberRegex = /[0-9]/;`
+ * Make sure to include this directive in app module.
+ * Use this directive to enhance the `HackerSearch` component so you can't type in numbers.
+
+ Reference Commit: https://github.com/victormejia/occs-angular-workshop/commit/2241955d9fee6f6ef01441a52419723a92e9e566
+
 </details>
 
 ## 8.Pipes

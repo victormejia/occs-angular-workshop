@@ -8,6 +8,7 @@ import { HackerListComponent } from './hacker-list/hacker-list.component';
 import { HackerComponent } from './hacker/hacker.component';
 import { HackerSearchComponent } from './hacker-search/hacker-search.component';
 import { HackerService } from './core/services/hacker.service';
+import { TextOnlyDirective } from './core/directives/text-only.directive';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { HackerService } from './core/services/hacker.service';
     HeaderComponent,
     HackerListComponent,
     HackerComponent,
-    HackerSearchComponent
+    HackerSearchComponent,
+    TextOnlyDirective
   ],
   imports: [
     BrowserModule,
