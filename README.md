@@ -2,7 +2,7 @@
 
 We will be building a dashboard to track The Grid's most prominent hackers!
 
-![app](https://raw.githubusercontent.com/victormejia/fluent-angular-testing-workshop/master/screenshots/app-screenshot.png)
+![app](https://d3vv6lp55qjaqc.cloudfront.net/items/3r393q281a311U1b3d3f/Screen%20Shot%202017-08-17%20at%2011.13.08%20AM.png?X-CloudApp-Visitor-Id=2623626&v=f7b678a4)
 
 ## 0. Setup
 <details>
@@ -34,6 +34,8 @@ This adds support for Sass and enables routing.
 ### 3. Install the following project dependencies:
 
 ```bash
+cd occs-workshop
+
 npm install semantic-ui-card semantic-ui-input semantic-ui-reset semantic-ui-table npm-run-all json-server faker @types/faker -S
 ```
 
@@ -76,9 +78,9 @@ We have created a new API route `/api`, and the available route is `localhost:30
   * Configure the following `npm` scripts:
 
 ```json
-"start": "run-p start:server start:client"
-"start:client": "ng serve --proxy-config proxy.conf.json --open"
-"start:server": "json-server --watch db.json --routes routes.json"
+"start": "run-p start:server start:client",
+"start:client": "ng serve --proxy-config proxy.conf.json --open",
+"start:server": "json-server --watch db.json --routes routes.json",
 ```
 
 ### 5. Add some quick styles:
