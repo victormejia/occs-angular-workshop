@@ -1000,6 +1000,31 @@ Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/ed
 
 <details>
   <summary>Details</summary>
+
+Unit testing Angular apps is a pretty awesome and vast topic. I'm going to actually just point you to my other resource [here](https://github.com/victormejia/angular-testing-workshop), a workshop I gave at [Fluent Conf 2017](https://conferences.oreilly.com/fluent/fl-ca/public/schedule/speaker/197177).
+
+During the workshop we'll spend some time going over this. We will be testing 2 things:
+  * `HackerComponent`, testing component inputs and template
+  * `HackerService`, testing async actions
+
+By default, running `npm test` (which runs `ng test`) gives you output like this:
+
+![test output](https://d3vv6lp55qjaqc.cloudfront.net/items/2L0y0g3v3u2J0t113Y35/Screen%20Shot%202017-08-16%20at%203.50.59%20PM.png?X-CloudApp-Visitor-Id=2623626&v=f7833e59)
+
+Not very useful output, so let's change that.
+  * install `karma-spec-reporter`
+  * add `require('karma-spec-reporter')` to the karma plugins
+  * change reporters to `reporters: ['spec', 'kjhtml']`
+  * change browsers to `browsers: ['ChromeCanaryHeadless']`
+
+Output should be much better now:
+
+![output](https://d3vv6lp55qjaqc.cloudfront.net/items/3Z3L1R393X03330C1U3g/Screen%20Shot%202017-08-16%20at%203.53.56%20PM.png?X-CloudApp-Visitor-Id=2623626&v=0bcaf34c)
+
+Reference commit for `HackerComponent`: https://github.com/victormejia/occs-angular-workshop/commit/eafe27c210056b1d09b7b72a7342cbe04d89bf44
+
+Reference commit for `HackerService`: https://github.com/victormejia/occs-angular-workshop/commit/22a0efef24ce329a542241f81b84b4a99a1b4fa8
+
 </details>
 
 ## 10. Redux with ngrx
