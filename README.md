@@ -2,7 +2,7 @@
 
 We will be building a dashboard to track The Grid's most prominent hackers!
 
-![app](https://d3vv6lp55qjaqc.cloudfront.net/items/3r393q281a311U1b3d3f/Screen%20Shot%202017-08-17%20at%2011.13.08%20AM.png?X-CloudApp-Visitor-Id=2623626&v=f7b678a4)
+![app](https://d3vv6lp55qjaqc.cloudfront.net/items/1L023h1U0E3k131X3C2y/Screen%20Shot%202017-08-17%20at%2011.17.47%20AM.png?X-CloudApp-Visitor-Id=2623626&v=43229e13)
 
 ## 0. Setup
 <details>
@@ -592,6 +592,151 @@ Result:
 ![result](https://d3vv6lp55qjaqc.cloudfront.net/items/1N3v0I3U1R37160P0I3G/Screen%20Shot%202017-08-10%20at%203.37.10%20PM.png?X-CloudApp-Visitor-Id=b09e9af6ac0bf9f72590951057fdf698&v=9a223d82)
 
 Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/726b65b8c0459517ffbe57c4ea1eabbd0517bc47
+
+**Exercise**
+
+As of now, the status is just text, which is kind of boring. Let's turn that into something more visuallly appealing:
+
+![status](https://d3vv6lp55qjaqc.cloudfront.net/items/1s0z3H1x323a28283j27/Screen%20Recording%202017-08-17%20at%2011.20%20AM.gif?X-CloudApp-Visitor-Id=2623626&v=8c22aeef)
+
+  * Generate a `status` component: `ng generate component status`
+  * You will need the following html and css:
+
+```html
+<div class="status-pulse">
+  <span class="pulse" [ngClass]="color"></span>
+  <span class="dot" [ngClass]="color"></span>
+</div>
+```
+
+```scss
+$red: #c0392b;
+$green: #27ae60;
+$yellow: #f1c40f;
+
+.status-pulse {
+  position: relative;
+  margin: 0 auto;
+  width: 10px;
+  height: 10px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.pulse {
+  width: 10px;
+  height: 10px;
+  border-radius: 30px;
+  position: absolute;
+
+  &.red {
+    border: 5px solid $red;
+    background-color: $red;
+  }
+
+  &.green {
+    border: 5px solid $green;
+    background-color: $green;
+  }
+
+  &.yellow {
+    border: 5px solid $yellow;
+    background-color: $yellow;
+  }
+}
+
+
+.dot {
+  background: transparent;
+  border-radius: 60px;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  opacity: 0;
+  border-width: 5px;
+  border-style: solid;
+
+  &.red {
+    border-color: $red;
+    animation: pulse 2s ease-out;
+    animation-iteration-count: infinite;
+  }
+
+  &.green {
+    border: 10px solid $green;
+  }
+
+  &.yellow {
+    border: 10px solid $yellow;
+  }
+}
+
+@keyframes pulse {
+ 0% {
+    transform: scale(0);
+    opacity: 0.0;
+ }
+ 10% {
+    transform: scale(0.1);
+    opacity: 0.1;
+ }
+ 20% {
+    transform: scale(0.2);
+    opacity: 0.2;
+ }
+ 30% {
+    transform: scale(0.3);
+    opacity: 0.3;
+ }
+ 40% {
+    transform: scale(0.4);
+    opacity: 0.4;
+ }
+ 50% {
+    transform: scale(0.5);
+    opacity: 0.5;
+ }
+ 60% {
+    transform: scale(0.6);
+    opacity: 0.6;
+ }
+ 70% {
+    transform: scale(0.75);
+    opacity: 0.5;
+ }
+ 80% {
+    transform: scale(0.8);
+    opacity: 0.4;
+ }
+ 90% {
+    transform: scale(0.85);
+    opacity: 0.2;
+ }
+ 100% {
+    transform: scale(0.9);
+    opacity: 0.0;
+ }
+}
+```
+
+  * The input to this component should be the hacker's status (warning, safe, danger). When this component is initialized, you should map the status to the correct color so that the correct classes are applied.
+    * danger -> red
+    * safe -> green
+    * warning -> yellow
+    * default to green
+  * Use this new component in the `HackerComponent`. Usage would be something like this:
+
+```html
+<td>
+  <app-status [status]="hacker.status"></app-status>
+</td>
+```
+
+Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/1bae1681d85aea8ad4124c48158d90253a5517a7
 
 </details>
 
