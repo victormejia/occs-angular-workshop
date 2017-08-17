@@ -361,6 +361,7 @@ Conditionally render a component/element.
 ```
 
 **`*ngClass`**
+
 Dynamically set and change the CSS classes.
 
 ```html
