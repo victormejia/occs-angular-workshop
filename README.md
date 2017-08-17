@@ -1101,7 +1101,7 @@ Here `event` would be actual DOM event, so you have access to things like `event
 
 </details>
 
-## 8.Pipes
+## 8. Pipes
 
 <details>
   <summary>Details</summary>
@@ -1223,7 +1223,129 @@ Reference commit for `HackerService`: https://github.com/victormejia/occs-angula
 
 </details>
 
-## 10. Redux with ngrx
+## 10. Routing
+
+<details>
+  <summary>Details</summary>
+
+Let's add some functionality now so that when we click on a specific row, the app nagivates to the hacker details.
+
+In the `HackerList` component, first add a click handler to the table row:
+
+```html
+<tr app-hacker [hacker]="hacker" *ngFor="let hacker of hackers" (click)="goToDetails(hacker.id)"></tr>
+```
+
+In the component, first inject the router:
+
+```js
+import { Router } from '@angular/router';
+...
+constructor(private api: HackerService, private router: Router) { }
+```
+
+And now we can implement the `goToDetails` method. We will call the `navigate` method on the router:
+
+```js
+goToDetails(id: string) {
+  this.router.navigate([`/hackers/${id}`]);
+}
+```
+
+We need to implement this route. We will render a `HackerDetail` component for this route, so let's generate that.
+
+```bash
+ng g c hacker-detail
+```
+
+And let's configure the routes:
+
+```js
+import { HackerDetailComponent } from './hacker-detail/hacker-detail.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: HackerListComponent
+  },
+  {
+    path: 'hackers/:id',
+    component: HackerDetailComponent
+  }
+];
+```
+
+In the `HackerDetailComponent` we need to inject the `ActivatedRoute` to get the route params, and obtain the hacker details:
+
+```js
+import { Component, OnInit, Input } from '@angular/core';
+import { Hacker } from '../core/hacker.model';
+import { ActivatedRoute } from '@angular/router';
+import { HackerService } from '../core/services/hacker.service';
+
+@Component({
+  selector: 'app-hacker-detail',
+  templateUrl: './hacker-detail.component.html',
+  styleUrls: ['./hacker-detail.component.scss']
+})
+export class HackerDetailComponent implements OnInit {
+  @Input() id: string;
+  hacker: Hacker;
+
+  constructor(private api: HackerService, private route: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+      this.renderDetails(this.id);
+    });
+  }
+
+  renderDetails(id: string) {
+    this.api.getHackerDetails(id)
+      .subscribe((data) => {
+        this.hacker = data;
+      });
+  }
+}
+```
+
+And the `getHackerDetails` implementation:
+
+```js
+getHackerDetails(id: string) {
+  return this.http.get<Hacker>(`/api/hackers/${id}`);
+}
+```
+
+You will need some html:
+
+```html
+<div *ngIf="hacker" class="ui card">
+  <div class="image">
+    <img [src]="hacker.avatar">
+  </div>
+  <div class="content">
+    <p class="header">{{hacker.name}}</p>
+    <div class="meta">
+      <span class="date">{{hacker.ip}}</span>
+      <p class="date">pwd: {{hacker.password}}</p>
+    </div>
+    <div class="description">
+      {{hacker.statusMessage}}
+    </div>
+  </div>
+  <div class="extra content">
+    {{hacker.status}}
+  </div>
+</div>
+```
+
+Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/c1b7d5745d273c25fb07b09b6b50d0a241c8f8c3
+
+</details>
+
+## 11. Redux with ngrx
 
 <details>
   <summary>Details</summary>
