@@ -1341,6 +1341,8 @@ You will need some html:
 </div>
 ```
 
+![routing](https://d3vv6lp55qjaqc.cloudfront.net/items/3R28013f370p0n2i3B32/Screen%20Recording%202017-08-17%20at%2011.42%20AM.gif?X-CloudApp-Visitor-Id=2623626&v=30491f3f)
+
 Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/c1b7d5745d273c25fb07b09b6b50d0a241c8f8c3
 
 </details>
