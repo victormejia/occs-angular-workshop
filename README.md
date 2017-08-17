@@ -335,10 +335,58 @@ This can be configured by changing the `ViewEncapsulation`:
 Reference Commit: https://github.com/victormejia/occs-angular-workshop/commit/4c9d640a65448b954656d9362028caf3ffe8c6dc
 </details>
 
-## 3. Built-in Directives
+## 3. Built-in Directives & Event/Property Bindings
 
 <details>
   <summary>Details</summary>
+
+ Angular has very useful built-in directives. Let's explore them.
+
+ **`*ngIf`**
+
+Conditionally render a component/element.
+
+ ```html
+ <span class="loader" *ngIf="loading"></span>
+ ```
+
+ **`*ngFor`**
+
+ Render a collection.
+
+```html
+<ul>
+  <li *ngFor="let contact of contacts">{{contact.name}}</li>
+</ul>
+```
+
+**`*ngClass`**
+Dynamically set and change the CSS classes.
+
+```html
+<span class="pulse" [ngClass]="color"></span>
+```
+
+```html
+<button [ngClass]="{bordered: isBordered}">Submit</button>
+```
+
+### Property Bindings
+
+In Angular, you bind properties using `[]`. For instance:
+
+```html
+<div [style.background-color]="color"> Uses fixed `color` background</div>
+```
+
+### Event Bindings
+
+You bind DOM events using `()`:
+
+```html
+<button (click)="validate()">Validate</button>
+```
+
 </details>
 
 ## 4. Component Inputs
@@ -1031,4 +1079,5 @@ Reference commit for `HackerService`: https://github.com/victormejia/occs-angula
 
 <details>
   <summary>Details</summary>
+  TBD
 </details>
