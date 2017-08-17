@@ -219,7 +219,7 @@ interface Hacker {
   name: string;
   inDanger: boolean;
   email?: string;
-  password?: string;
+  password: string;
 }
 
 // the following would give an error because "password" is a required property and not optional
@@ -571,7 +571,7 @@ To over come this, we can still use the component, except we must update the sel
 selector: '[app-hacker], // tslint:disable-line'
 ```
 
-The current `tslint` configuration doesn't allow this, so we can suppres this error.
+The current `tslint` configuration doesn't allow this, so we can suppress this error.
 
 If you've installed the Angular Language Service extension, you'll see an error in your editor:
 
@@ -759,7 +759,7 @@ You can defined specific output actions for your components. We will be now defi
 <app-hacker-search (newSearch)="filterData($event)"><app-hacker-search>
 ```
 
-`termChange` is an output from this component, and when triggered, it will call the `filterData` method on the parent component The `HackerSearch` component can emit any kind of data.
+`newSearch` is an output from this component, and when triggered, it will call the `filterData` method on the parent component. The `HackerSearch` component can emit any kind of data.
 
 Start by generating a new component:
 
