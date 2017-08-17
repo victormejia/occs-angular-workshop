@@ -11,4 +11,8 @@ export class HackerService {
     return this.http.get<Hacker[]>(`/api/hackers?q=${search}`);
   }
 
+  getHackerDetails(id: string) {
+    return this.http.get<Hacker>(`/api/hackers/${id}`);
+  }
+
 }

@@ -11,6 +11,7 @@ import { HackerService } from './core/services/hacker.service';
 import { TextOnlyDirective } from './core/directives/text-only.directive';
 import { ShortDatePipe } from './core/pipes/short-date.pipe';
 import { StatusComponent } from './status/status.component';
+import { HackerDetailComponent } from './hacker-detail/hacker-detail.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { StatusComponent } from './status/status.component';
     HackerSearchComponent,
     TextOnlyDirective,
     ShortDatePipe,
-    StatusComponent
+    StatusComponent,
+    HackerDetailComponent
   ],
   imports: [
     BrowserModule,
