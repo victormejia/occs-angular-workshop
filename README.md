@@ -593,7 +593,7 @@ Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/72
 
 </details>
 
-## 5. Component Output
+## 5. Component Outputs
 
 <details>
   <summary>Details</summary>
