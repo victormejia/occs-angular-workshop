@@ -13,6 +13,9 @@ import { ShortDatePipe } from './core/pipes/short-date.pipe';
 import { StatusComponent } from './status/status.component';
 import { HackerDetailComponent } from './hacker-detail/hacker-detail.component';
 
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './core/reducers';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +31,8 @@ import { HackerDetailComponent } from './hacker-detail/hacker-detail.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(reducers)
   ],
   providers: [HackerService],
   bootstrap: [AppComponent]
