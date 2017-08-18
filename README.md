@@ -1347,9 +1347,78 @@ Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/c1
 
 </details>
 
-## 11. Redux with ngrx
+## 11. RxJS and ngrx (redux)
 
 <details>
   <summary>Details</summary>
-  TBD
+
+[ngrx](https://github.com/ngrx/platform) is an "RxJS powered state management for Angular, inspired by Redux". It's pretty awesome. Although you do not need to be an RxJS expert, you do have to be comfortable with some common operators. There are a few good resources out there to get started with ngrx and RxJS:
+
+  * [From Inactive to Reactive @ngconf 2017](https://www.youtube.com/watch?v=cyaAhXHhxgk)
+  * https://gist.github.com/btroncone/a6e4347326749f938510
+  * https://gist.github.com/btroncone/d6cf141d6f2c00dc6b35
+  * egghead.io
+
+Before we dive into ngrx, let's first see some RxJS coolness. As of now, the search component is emitting every single value, which is of course not optimal. You don't want to be making these many requests. Angular embraced RxJS and has the cool concept of "Reactive Forms". This means that we can express value changes of inputs as on Observable stream, which allows us to apply operators for filtering and even debouncing them.
+
+Start by importing the `ReactiveFormsModule` into your app's module:
+
+```diff
++ import { ReactiveFormsModule } from '@angular/forms';
+...
+  imports: [
+      BrowserModule,
+      AppRoutingModule,
+      HttpClientModule,
++     ReactiveFormsModule,
+      StoreModule.forRoot(reducers)
+    ],
+```
+
+Next in the `HackerSearch` component, import `FormControl` and the `debounceTime` operator:
+
+```js
+import { FormControl } from '@angular/forms';
+import 'rxjs/add/operator/debounceTime';
+```
+
+In our template, we can now use the `formControl` directive:
+
+```html
+<input appTextOnly type="text" placeholder="Search..." [formControl]="searchTerm">
+```
+
+`searchTerm` should be a `FormControl`:
+
+```js
+searchTerm: FormControl = new FormControl();
+```
+
+In the `ngOnInit` method, we can now apply some operators. We want to "listen for value changes, debounce those values 500ms, and finally subscribe to the data":
+
+```js
+ngOnInit() {
+  this.searchTerm
+    .valueChanges
+    .debounceTime(500)
+    .subscribe(term => this.newSearch.emit(term));
+}
+```
+
+Don't you love how declaritive that is? RxJS enabled us here to do some pretty powerful things with a few lines of code. Now, our search component is much more performant.
+
+Reference commit: https://github.com/victormejia/occs-angular-workshop/commit/54d5b3477b760aafe42585f61e24337bc0447b38
+
+In class, we will go over how to work with ngrx as a redux-inspired state management solution for Angular.
+
+Reference images (from ngconf talk):
+
+![redux](https://d3vv6lp55qjaqc.cloudfront.net/items/270N3v1G2K211B1q1T1l/Screen%20Shot%202017-08-11%20at%203.24.31%20PM.png?X-CloudApp-Visitor-Id=2623626&v=092e4a35)
+
+![ngrx](https://d3vv6lp55qjaqc.cloudfront.net/items/170Y0z2p170T421k172W/Screen%20Shot%202017-08-18%20at%201.31.06%20PM.png?X-CloudApp-Visitor-Id=2623626&v=56114424)
+
+![effects](https://d3vv6lp55qjaqc.cloudfront.net/items/2n003V1W2B0E2d2y3l0o/Screen%20Shot%202017-08-18%20at%201.33.10%20PM.png?X-CloudApp-Visitor-Id=2623626&v=c97f9684)
+
+  * Initial store and reducers: https://github.com/victormejia/occs-angular-workshop/commit/5333b8626c9192b5857f25d9127c1759de6e0108
+  * Side effects: https://github.com/victormejia/occs-angular-workshop/commit/83a118890aee29cc2e21f0e74e24f05c47614fe3
 </details>
