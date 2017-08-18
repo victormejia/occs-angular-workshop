@@ -26,24 +26,13 @@ export class HackerListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.api.getHackers()
-      .subscribe(data => this.newHackerData(data), this.handleApiError.bind(this));
+    this.store.dispatch(new SearchActions.Search(''));
   }
 
   filterData(term: string) {
     const searchTerm = term.toLowerCase();
 
-    this.api.getHackers(term)
-      .subscribe(data => this.newHackerData(data), this.handleApiError.bind(this));
-  }
-
-  handleApiError(err) {
-    console.log(err);
-    this.newHackerData([]);
-  }
-
-  newHackerData = (data: Hacker[]) => {
-    this.store.dispatch(new SearchActions.SearchSuccess(data));
+    this.store.dispatch(new SearchActions.Search(searchTerm));
   }
 
   goToDetails(id: string) {

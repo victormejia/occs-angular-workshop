@@ -16,6 +16,8 @@ import { HackerDetailComponent } from './hacker-detail/hacker-detail.component';
 
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './core/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { HackerEffects } from './core/effects';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { reducers } from './core/reducers';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([HackerEffects])
   ],
   providers: [HackerService],
   bootstrap: [AppComponent]
