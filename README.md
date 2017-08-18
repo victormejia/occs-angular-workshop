@@ -334,6 +334,8 @@ This can be configured by changing the `ViewEncapsulation`:
 
 ![view encapsulation](https://d3vv6lp55qjaqc.cloudfront.net/items/0o381o3K1T2v261x1j1C/Screen%20Shot%202017-08-10%20at%2011.13.42%20AM.png?X-CloudApp-Visitor-Id=b09e9af6ac0bf9f72590951057fdf698&v=61ecb08a)
 
+Nice read: https://blog.angular.io/the-state-of-css-in-angular-4a52d4bd2700
+
 Reference Commit: https://github.com/victormejia/occs-angular-workshop/commit/4c9d640a65448b954656d9362028caf3ffe8c6dc
 </details>
 
